@@ -1,0 +1,55 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Start MongoDB",
+        "type": "shell",
+        "command": "mongod",
+        "presentation": {
+          "focus": false,
+          "panel": "dedicated"
+        },
+        "runOptions": {
+          "runOn": "folderOpen"
+        },
+        "detail": "Inicia el servidor MongoDB"
+      },
+      {
+        "label": "Start NestJS",
+        "type": "shell",
+        "command": "nest start --watch",
+        "presentation": {
+          "focus": true,
+          "panel": "dedicated"
+        },
+        "runOptions": {
+          "runOn": "folderOpen"
+        },
+        "detail": "Inicia el servidor NestJS en modo watch"
+      },
+      {
+        "label": "Stop MongoDB",
+        "type": "shell",
+        "command": "taskkill /F /IM mongod.exe",
+        "presentation": {
+          "panel": "dedicated"
+        },
+        "runOptions": {
+          "runOn": "folderClose"
+        },
+        "detail": "Detiene el servidor MongoDB"
+      },
+      {
+        "label": "Stop NestJS",
+        "type": "shell",
+        "command": "taskkill /F /IM node.exe",
+        "presentation": {
+          "panel": "dedicated"
+        },
+        "runOptions": {
+          "runOn": "folderClose"
+        },
+        "detail": "Detiene el servidor NestJS"
+      }
+    ]
+  }

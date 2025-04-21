@@ -10,6 +10,9 @@ import { ResponseInterceptor } from './common/interceptors/response.interceptor'
 import { PropuestasModule } from './api/propuestas/propuestas.module';
 import { GaleriaModule } from './api/galeria/galeria.module';
 import { CronogramaModule } from './api/cronograma/cronograma.module';
+import { CandidatosModule } from './api/candidatos/candidatos.module';
+import { PersonaModule } from './api/persona/persona.module';
+import { VotosModule } from './api/votos/votos.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -25,7 +28,12 @@ import { CronogramaModule } from './api/cronograma/cronograma.module';
   AuthModule, 
   UsersModule, 
   PartidoPoliticoModule, 
-  PropuestasModule, GaleriaModule, CronogramaModule,
+  PropuestasModule, 
+  GaleriaModule, 
+  CronogramaModule, 
+  CandidatosModule, 
+  PersonaModule,
+  VotosModule,
 ],
   controllers: [AppController],
   providers: [
