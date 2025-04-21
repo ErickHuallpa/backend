@@ -19,4 +19,7 @@ export class Candidato {
   
   @Column({ default: 0 })
   votos: number;
+
+  @Column({ nullable: true })
+  foto?: string;
 }

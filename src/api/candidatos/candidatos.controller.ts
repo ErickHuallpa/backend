@@ -1,15 +1,34 @@
-import { Controller, Post, Get, Patch, Delete, Body, Param, Put } from '@nestjs/common';
+import { Controller, Post, Get, Patch, Delete, Body, Param, Put, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { CandidatosService } from './candidatos.service';
 import { CreateCandidatoDto } from './dto/create-candidato.dto';
 import { UpdateCandidatoDto } from './dto/update-candidato.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
+import { CreateActividadDto } from '../cronograma/dto/create-actividad.dto';
 
 @Controller('candidatos')
 export class CandidatosController {
   constructor(private readonly candidatosService: CandidatosService) {}
 
   @Post()
-  create(@Body() dto: CreateCandidatoDto) {
-    return this.candidatosService.create(dto);
+  @UseInterceptors(FileInterceptor('foto', {
+    storage: diskStorage({
+      destination: './uploads/candidatos',
+      filename: (req, file, cb) => {
+        const unique = Date.now() + '-' + Math.round(Math.random() * 1e9);
+        cb(null, unique + extname(file.originalname));
+      },
+    }),
+  }))
+  create(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() dto: CreateCandidatoDto,
+  ) {
+    return this.candidatosService.create({
+      ...dto,
+      foto: file?.filename,
+    });
   }
 
   @Get()

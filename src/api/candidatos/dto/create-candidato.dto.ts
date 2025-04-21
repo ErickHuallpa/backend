@@ -1,4 +1,4 @@
-import { IsString, IsNumber } from 'class-validator';
+import { IsString, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateCandidatoDto {
   @IsString()
@@ -12,4 +12,8 @@ export class CreateCandidatoDto {
 
   @IsString()
   partidoId: string;
+
+  @IsOptional()
+  @IsString()
+  foto?: string | null;
 }
