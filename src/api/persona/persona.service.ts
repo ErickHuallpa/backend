@@ -13,10 +13,13 @@ export class PersonaService {
   ) {}
 
   create(dto: CreatePersonaDto) {
-    const persona = this.personaRepo.create(dto);
+    const persona = this.personaRepo.create({
+      ...dto,
+      yaVoto: false,
+    });
     return this.personaRepo.save(persona);
   }
-
+  
   findAll() {
     return this.personaRepo.find();
   }

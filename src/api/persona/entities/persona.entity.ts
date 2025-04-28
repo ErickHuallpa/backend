@@ -19,4 +19,7 @@ export class Persona {
 
   @Column()
   fechaNacimiento: Date;
+
+  @Column({ default: false })
+  yaVoto: boolean;
 }

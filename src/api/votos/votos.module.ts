@@ -5,9 +5,12 @@ import { VotosController } from './votos.controller';
 import { Voto } from './entities/voto.entity';
 import { Candidato } from '../candidatos/entities/candidatos.entity';
 import { Eleccion } from '../elecciones/entities/eleccion.entity';
+import { PersonaModule } from '../persona/persona.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Voto, Candidato, Eleccion])],
+  imports: [TypeOrmModule.forFeature([Voto, Candidato, Eleccion]),
+  PersonaModule
+],
   controllers: [VotosController],
   providers: [VotosService],
 })

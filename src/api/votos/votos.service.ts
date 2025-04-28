@@ -7,6 +7,7 @@ import { Candidato } from '../candidatos/entities/candidatos.entity';
 import { ObjectId } from 'mongodb';
 import { Eleccion } from '../elecciones/entities/eleccion.entity';
 import * as moment from 'moment-timezone';
+import { Persona } from '../persona/entities/persona.entity';
 
 @Injectable()
 export class VotosService {
@@ -17,30 +18,44 @@ export class VotosService {
     private readonly candidatoRepo: Repository<Candidato>,
     @InjectRepository(Eleccion)
     private readonly eleccionRepo: Repository<Eleccion>,
+    @InjectRepository(Persona)
+    private readonly personaRepo: Repository<Persona>,
   ) {}
 
   private cedulasVotantes: Set<string> = new Set();
 
   async votar(dto: CreateVotoDto) {
     await this.validarDiaDeEleccion();
-
-    if (this.cedulasVotantes.has(dto.cedulaIdentidad)) {
+  
+    const persona = await this.personaRepo.findOne({ where: { cedulaIdentidad: dto.cedulaIdentidad } });
+    if (!persona) {
+      throw new BadRequestException('La cédula no está registrada en el padrón.');
+    }
+  
+    if (persona.yaVoto) {
       throw new BadRequestException('Esta cédula ya ha votado.');
     }
+  
     const fechaVotoLocal = moment().tz('America/La_Paz').format();
-
+  
     const voto = this.votoRepo.create({
       presidenteViceId: dto.presidenteViceId,
       gobernadorId: dto.gobernadorId,
       fechaVoto: fechaVotoLocal,
     });
-
+    
+  
     await this.incrementarVotos(new ObjectId(dto.presidenteViceId));
     await this.incrementarVotos(new ObjectId(dto.gobernadorId));
-
-    this.cedulasVotantes.add(dto.cedulaIdentidad);
+  
+    persona.yaVoto = true;
+    await this.personaRepo.save(persona);
+  
     return this.votoRepo.save(voto);
   }
+  
+  
+  
 
   private async incrementarVotos(candidatoId: ObjectId) {
     const candidato = await this.candidatoRepo.findOne({ where: { _id: candidatoId } });
