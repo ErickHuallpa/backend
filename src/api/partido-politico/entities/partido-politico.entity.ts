@@ -3,7 +3,7 @@ import { Entity, ObjectIdColumn, Column, ObjectId } from 'typeorm';
 @Entity()
 export class PartidoPolitico {
   @ObjectIdColumn()
-  id: ObjectId;
+  _id: ObjectId;
 
   @Column()
   nombre: string;

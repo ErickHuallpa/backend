@@ -10,4 +10,7 @@ export class Voto {
 
   @Column()
   gobernadorId: string;
+
+  @Column()
+  fechaVoto: Date;
 }

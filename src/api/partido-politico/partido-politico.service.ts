@@ -23,7 +23,7 @@ export class PartidoPoliticoService {
   }
 
   async findOne(id: string): Promise<PartidoPolitico> {
-    const partido = await this.partidoRepository.findOne({ where: { id: new ObjectId(id) } });  // Convertir id a ObjectId
+    const partido = await this.partidoRepository.findOne({ where: { _id: new ObjectId(id) } });  // Convertir id a ObjectId
     if (!partido) {
       throw new NotFoundException(`Partido Politico con ID ${id} no encontrado`);
     }

@@ -13,6 +13,7 @@ import { CronogramaModule } from './api/cronograma/cronograma.module';
 import { CandidatosModule } from './api/candidatos/candidatos.module';
 import { PersonaModule } from './api/persona/persona.module';
 import { VotosModule } from './api/votos/votos.module';
+import { EleccionesModule } from './api/elecciones/elecciones.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -34,6 +35,7 @@ import { VotosModule } from './api/votos/votos.module';
   CandidatosModule, 
   PersonaModule,
   VotosModule,
+  EleccionesModule
 ],
   controllers: [AppController],
   providers: [

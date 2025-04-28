@@ -23,18 +23,18 @@ export class PropuestasService {
   }
 
   findOne(id: string) {
-    return this.propuestaRepo.findOne({ where: { id: new ObjectId(id) } });
+    return this.propuestaRepo.findOne({ where: { _id: new ObjectId(id) } });
   }
   
   async update(id: string, updateDto: UpdatePropuestaDto) {
-    const propuesta = await this.propuestaRepo.findOne({ where: { id: new ObjectId(id) } });
+    const propuesta = await this.propuestaRepo.findOne({ where: { _id: new ObjectId(id) } });
     if (!propuesta) throw new NotFoundException('Propuesta no encontrada');
     Object.assign(propuesta, updateDto);
     return this.propuestaRepo.save(propuesta);
   }
   
   async remove(id: string) {
-    const propuesta = await this.propuestaRepo.findOne({ where: { id: new ObjectId(id) } });
+    const propuesta = await this.propuestaRepo.findOne({ where: { _id: new ObjectId(id) } });
     if (!propuesta) throw new NotFoundException('Propuesta no encontrada');
     return this.propuestaRepo.remove(propuesta);
   }  

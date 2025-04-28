@@ -1,16 +1,16 @@
 import { Entity, ObjectIdColumn, ObjectId, Column } from 'typeorm';
 
 @Entity()
-export class Propuesta {
+export class Eleccion {
   @ObjectIdColumn()
   _id: ObjectId;
 
   @Column()
-  titulo: string;
+  fechaInicio: Date;
 
   @Column()
-  descripcion: string;
+  horaInicio: string;
 
   @Column()
-  partidoId: string;
+  fechaFin: Date;
 }

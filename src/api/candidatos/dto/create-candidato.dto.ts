@@ -15,5 +15,5 @@ export class CreateCandidatoDto {
 
   @IsOptional()
   @IsString()
-  foto?: string | null;
+  foto?: string;
 }
