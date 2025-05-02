@@ -12,23 +12,8 @@ export class CandidatosController {
   constructor(private readonly candidatosService: CandidatosService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('foto', {
-    storage: diskStorage({
-      destination: './uploads/candidatos',
-      filename: (req, file, cb) => {
-        const unique = Date.now() + '-' + Math.round(Math.random() * 1e9);
-        cb(null, unique + extname(file.originalname));
-      },
-    }),
-  }))
-  create(
-    @UploadedFile() file: Express.Multer.File,
-    @Body() dto: CreateCandidatoDto,
-  ) {
-    return this.candidatosService.create({
-      ...dto,
-      foto: file?.filename,
-    });
+  create(@Body() dto: CreateCandidatoDto) {
+    return this.candidatosService.create(dto);
   }
 
   @Get()

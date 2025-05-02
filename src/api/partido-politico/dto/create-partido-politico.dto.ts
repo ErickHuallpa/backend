@@ -25,6 +25,6 @@ export class CreatePartidoPoliticoDto {
   @ApiProperty({ example: 'PE' })
   @IsString()
   @MinLength(2)
-  @MaxLength(5)
+  @MaxLength(10)
   siglas: string;
 }

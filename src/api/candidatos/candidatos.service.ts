@@ -14,10 +14,14 @@ export class CandidatosService {
   ) {}
 
   async create(dto: CreateCandidatoDto) {
-    const candidato = this.candidatoRepo.create({...dto, votos: 0,});
+    const candidato = this.candidatoRepo.create({
+      ...dto,
+      votos: 0,
+      foto: dto.foto || ''
+    });
     return this.candidatoRepo.save(candidato);
   }
-
+  
   findAll() {
     return this.candidatoRepo.find();
   }

@@ -8,5 +8,5 @@ export class CreatePropuestaDto {
   descripcion: string;
 
   @IsString()
-  partidoId: string;
+  candidatoId: string;
 }

@@ -12,5 +12,5 @@ export class Propuesta {
   descripcion: string;
 
   @Column()
-  partidoId: string;
+  candidatoId: string;
 }

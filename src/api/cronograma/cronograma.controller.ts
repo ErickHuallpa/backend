@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, Patch, Delete, NotFoundException } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Patch, Delete, NotFoundException, Query } from '@nestjs/common';
 import { CronogramaService } from './cronograma.service';
 import { CreateActividadDto } from './dto/create-actividad.dto';
 import { UpdateActividadDto } from './dto/update-actividad.dto';
@@ -13,7 +13,10 @@ export class CronogramaController {
   }
 
   @Get()
-  findAll() {
+  findAll(@Query('candidatoId') candidatoId?: string) {
+    if (candidatoId) {
+      return this.cronogramaService.findByCandidatoId(candidatoId);
+    }
     return this.cronogramaService.findAll();
   }
 

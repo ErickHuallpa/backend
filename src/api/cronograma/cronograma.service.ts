@@ -29,6 +29,13 @@ export class CronogramaService {
     const actividad = await this.actividadRepo.findOne({ where: { _id: new ObjectId(id) } });
     return actividad;
   }
+  async findByCandidatoId(candidatoId: string) {
+    return this.actividadRepo.find({ 
+      where: { 
+        candidatoId: candidatoId 
+      } 
+    });
+  }
   
   async update(id: string, dto: UpdateActividadDto) {
     const actividad = await this.findOne(id);

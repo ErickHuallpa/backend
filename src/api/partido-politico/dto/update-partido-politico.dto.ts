@@ -30,6 +30,6 @@ export class UpdatePartidoPoliticoDto {
   @IsString()
   @IsOptional()
   @MinLength(2)
-  @MaxLength(5)
+  @MaxLength(10)
   siglas?: string;
 }

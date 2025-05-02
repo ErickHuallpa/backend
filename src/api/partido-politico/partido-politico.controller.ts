@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, Delete, Put, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Delete, Put, UseGuards, Query, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PartidoPolitico } from './entities/partido-politico.entity';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -16,6 +16,12 @@ export class PartidoPoliticoController {
     return this.partidoService.create(createPartidoDto);
   }
 
+  @Get('search') // <-- Esta es la ruta importante
+  async search(@Query('term') term: string): Promise<PartidoPolitico[]> {
+    return this.partidoService.search(term);
+  }
+  
+
   @Get()
   //@UseGuards(JwtAuthGuard, RolesGuard)
   //@Roles('admin')
@@ -25,7 +31,14 @@ export class PartidoPoliticoController {
 
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<PartidoPolitico> {
-    return this.partidoService.findOne(id);
+    try {
+      return await this.partidoService.findOne(id);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new BadRequestException('ID inválido');
+    }
   }
 
   @Put(':id')
@@ -36,6 +49,8 @@ export class PartidoPoliticoController {
     return this.partidoService.update(id, updatePartidoDto);
   }
 
+
+  
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<void> {
     return this.partidoService.remove(id);

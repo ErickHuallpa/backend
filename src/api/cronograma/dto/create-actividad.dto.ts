@@ -12,5 +12,5 @@ export class CreateActividadDto {
   fecha: string;
 
   @IsString()
-  partidoId: string;
+  candidatoId: string;
 }

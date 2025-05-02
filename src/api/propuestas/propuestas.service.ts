@@ -37,5 +37,13 @@ export class PropuestasService {
     const propuesta = await this.propuestaRepo.findOne({ where: { _id: new ObjectId(id) } });
     if (!propuesta) throw new NotFoundException('Propuesta no encontrada');
     return this.propuestaRepo.remove(propuesta);
-  }  
+  } 
+
+  findByCandidatoId(candidatoId: string) {
+    return this.propuestaRepo.find({ 
+      where: { 
+        candidatoId: candidatoId 
+      } 
+    });
+  }
 }
