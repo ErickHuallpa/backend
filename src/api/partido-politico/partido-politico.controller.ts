@@ -11,6 +11,8 @@ import { PartidoPoliticoService } from './partido-politico.service';
 export class PartidoPoliticoController {
   constructor(private readonly partidoService: PartidoPoliticoService) {}
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @Post()
   async create(@Body() createPartidoDto: CreatePartidoPoliticoDto): Promise<PartidoPolitico> {
     return this.partidoService.create(createPartidoDto);
@@ -41,6 +43,8 @@ export class PartidoPoliticoController {
     }
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @Put(':id')
   async update(
     @Param('id') id: string,
@@ -48,9 +52,9 @@ export class PartidoPoliticoController {
   ): Promise<PartidoPolitico> {
     return this.partidoService.update(id, updatePartidoDto);
   }
-
-
   
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<void> {
     return this.partidoService.remove(id);
