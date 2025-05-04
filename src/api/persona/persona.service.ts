@@ -30,6 +30,13 @@ export class PersonaService {
     return persona;
   }
 
+  async findByCedula(cedula: string) {
+    const persona = await this.personaRepo.findOne({ where: { cedulaIdentidad: cedula } });
+    if (!persona) throw new NotFoundException('Persona con cédula no encontrada');
+    return persona;
+  }
+  
+
   async update(id: string, dto: UpdatePersonaDto) {
     const persona = await this.findOne(id);
     Object.assign(persona, dto);

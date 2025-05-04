@@ -22,6 +22,11 @@ export class PersonaController {
     return this.personaService.findOne(id);
   }
 
+  @Get('cedula/:cedula')
+  findByCedula(@Param('cedula') cedula: string) {
+    return this.personaService.findByCedula(cedula);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() dto: UpdatePersonaDto) {
     return this.personaService.update(id, dto);
