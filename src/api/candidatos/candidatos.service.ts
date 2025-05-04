@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCandidatoDto } from './dto/create-candidato.dto';
@@ -39,6 +39,7 @@ export class CandidatosService {
     Object.assign(candidato, dto);
     return this.candidatoRepo.save(candidato);
   }
+    
 
   async remove(id: string) {
     const candidato = await this.findOne(id);

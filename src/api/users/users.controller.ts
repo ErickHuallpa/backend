@@ -22,9 +22,7 @@ export class UsersController {
     const { password, ...userWithoutPassword } = user;
     return userWithoutPassword;
   }
-
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  
   @Get()
   async findAll(): Promise<Omit<User, 'password'>[]> {
     const users = await this.usersService.findAll();

@@ -3,10 +3,12 @@ import { CronogramaController } from './cronograma.controller';
 import { CronogramaService } from './cronograma.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Actividad } from './entities/actividad.entity';
+import { CandidatosModule } from '../candidatos/candidatos.module';
+import { ActividadPermissionGuard } from '../auth/guards/actividad-permission.guard';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Actividad])],
+  imports: [CandidatosModule ,TypeOrmModule.forFeature([Actividad])],
   controllers: [CronogramaController],
-  providers: [CronogramaService]
+  providers: [CronogramaService, ActividadPermissionGuard]
 })
 export class CronogramaModule {}

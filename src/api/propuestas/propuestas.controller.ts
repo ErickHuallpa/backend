@@ -1,7 +1,9 @@
-import { Controller, Post, Get, Body, Param, Put, Delete, Query } from '@nestjs/common';
+import { Controller, Post, Get, Body, Param, Put, Delete, Query, UseGuards } from '@nestjs/common';
 import { PropuestasService } from './propuestas.service';
 import { CreatePropuestaDto } from './dto/create-propuesta.dto';
 import { UpdatePropuestaDto } from './dto/update-propuesta.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { PropuestaPermissionGuard } from '../auth/guards/propuesta-permission.guard';
 
 @Controller('propuestas')
 export class PropuestasController {
@@ -26,6 +28,7 @@ export class PropuestasController {
   }
 
   @Put(':id')
+  @UseGuards(JwtAuthGuard, PropuestaPermissionGuard)
   update(@Param('id') id: string, @Body() updateDto: UpdatePropuestaDto) {
     return this.propuestasService.update(id, updateDto);
   }

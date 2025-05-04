@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, MinLength } from 'class-validator';
+import { Column } from 'typeorm';
 
 export class CreateUserDto {
   @ApiProperty({ example: 'janedoe' })
@@ -14,4 +15,7 @@ export class CreateUserDto {
   @ApiProperty({ example: 'admin' })
   @IsString()
   role: string;
+
+  @IsString()
+  partidoId: string;
 }
