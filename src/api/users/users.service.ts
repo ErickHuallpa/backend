@@ -1,8 +1,8 @@
-// src/users/users.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class UsersService {
@@ -16,8 +16,9 @@ export class UsersService {
   }
 
   async findById(id: string): Promise<User> {
-    const user = await this.usersRepository.findOne({ where: { _id: id as any } });
-    if (!user) throw new NotFoundException('User not found');
+    const objectId = new ObjectId(id);
+    const user = await this.usersRepository.findOne({ where: { _id: objectId } });
+    if (!user) throw new NotFoundException('User not found :(');
     return user;
   }
 
