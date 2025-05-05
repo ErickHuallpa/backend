@@ -1,6 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, MinLength } from 'class-validator';
-import { Column } from 'typeorm';
+// src/users/dto/create-user.dto.ts
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsOptional, IsString, MinLength } from 'class-validator';
 
 export class CreateUserDto {
   @ApiProperty({ example: 'janedoe' })
@@ -12,10 +12,13 @@ export class CreateUserDto {
   @MinLength(6)
   password: string;
 
-  @ApiProperty({ example: 'admin' })
+  @ApiPropertyOptional({ example: 'admin' })
+  @IsOptional()
   @IsString()
-  role: string;
+  role?: string;
 
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsString()
-  partidoId: string;
+  partidoId?: string;
 }

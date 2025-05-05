@@ -1,9 +1,10 @@
+// src/users/entities/user.entity.ts
 import { Entity, ObjectIdColumn, Column, ObjectId } from 'typeorm';
 
 @Entity()
 export class User {
   @ObjectIdColumn()
-  id: ObjectId;
+  _id: ObjectId;
 
   @Column()
   username: string;
@@ -14,6 +15,6 @@ export class User {
   @Column({ default: 'user' })
   role: string;
   
-  @Column()
-  partidoId: string;
+  @Column({ nullable: true })
+  partidoId: string | null;
 }
