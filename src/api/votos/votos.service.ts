@@ -8,6 +8,7 @@ import { ObjectId } from 'mongodb';
 import { Eleccion } from '../elecciones/entities/eleccion.entity';
 import * as moment from 'moment-timezone';
 import { Persona } from '../persona/entities/persona.entity';
+import { CandidatosGateway } from '../candidatos/candidatos.gateway';
 
 @Injectable()
 export class VotosService {
@@ -20,6 +21,8 @@ export class VotosService {
     private readonly eleccionRepo: Repository<Eleccion>,
     @InjectRepository(Persona)
     private readonly personaRepo: Repository<Persona>,
+  
+    private readonly candidatosGateway: CandidatosGateway
   ) {}
 
   private cedulasVotantes: Set<string> = new Set();
@@ -54,16 +57,14 @@ export class VotosService {
     return this.votoRepo.save(voto);
   }
   
-  
-  
-
   private async incrementarVotos(candidatoId: ObjectId) {
     const candidato = await this.candidatoRepo.findOne({ where: { _id: candidatoId } });
     if (!candidato) {
       throw new BadRequestException('Candidato no encontrado');
     }
     candidato.votos += 1;
-    await this.candidatoRepo.save(candidato);
+    const actualizado = await this.candidatoRepo.save(candidato);
+    this.candidatosGateway.emitirActualizacionCandidato(actualizado);
   }
 
   findAll() {
